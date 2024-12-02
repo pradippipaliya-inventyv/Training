@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+spec:
+  containers:
+  - image: alpine
+    name: alpine
+    command:
+      - "sh"
+      - "-c"
+      - "echo going to sleep... && sleep 10000"
+    volumeMounts:
+    - name: secrets-store-inline
+      mountPath: "/akeyless-secrets"
+      readOnly: true
+  volumes:
+    - name: secrets-store-inline
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "akeyless-hello"

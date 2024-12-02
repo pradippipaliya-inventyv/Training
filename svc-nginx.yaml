@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-loadbalancer-service
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: test-2-lb-8b12e0c24e56e619.elb.us-east-1.amazonaws.com
+  selector:
+    run: pod  # Matches your pod label
+  ports:
+    - protocol: TCP
+      port: 80          # The port exposed by the service
+      targetPort: 80  # The port on the pod
+
